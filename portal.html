@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Down the Rabbit Hole — DMT World</title>
+<meta name="description" content="A portal opens. How deep does it go? Fall down the rabbit hole into the DMT World void — a trippy interactive experience.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<meta property="og:title" content="Down the Rabbit Hole — DMT World">
+<meta property="og:description" content="A portal opens. How deep does it go? Fall into the void.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DMT World">
+<meta property="og:url" content="https://guyrstewart-sudo.github.io/dmtworld-site/portal.html">
+<meta property="og:image" content="https://guyrstewart-sudo.github.io/dmtworld-site/assets/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://guyrstewart-sudo.github.io/dmtworld-site/assets/og-image.png">
+<meta name="theme-color" content="#05010D">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#05010D;cursor:pointer}
+  #void{position:fixed;inset:0;display:block;z-index:0}
+  .stage{position:fixed;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:24px;transition:opacity .8s ease}
+  .eyebrow{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.45em;text-transform:uppercase;color:var(--elf);margin-bottom:14px}
+  #intro h1{font-family:var(--font-display);font-weight:800;font-size:clamp(2.8rem,11vw,7rem);line-height:.95;margin:0 0 16px;
+    background:var(--grad-hyper);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:220% 220%;animation:hue 7s linear infinite}
+  .sub{color:var(--bone);opacity:.82;max-width:460px;font-size:1.05rem;margin:0 auto 26px}
+  .enter-portal{font-family:var(--font-mono);font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.95rem;
+    padding:16px 40px;border-radius:999px;border:1px solid var(--elf);color:#05010D;background:var(--grad-hyper);cursor:pointer;
+    box-shadow:0 0 30px rgba(255,43,174,.55);animation:breathe-btn 2.4s ease-in-out infinite}
+  .enter-portal:hover{box-shadow:0 0 50px rgba(0,255,163,.8)}
+  .hint{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:22px;animation:blink 2.6s ease-in-out infinite}
+  @keyframes breathe-btn{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  @keyframes blink{0%,100%{opacity:.35}50%{opacity:.9}}
+  @keyframes hue{to{background-position:220% 50%}}
+  #frags{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden}
+  .frag{position:absolute;left:50%;top:50%;font-family:var(--font-display);font-weight:800;white-space:nowrap;
+    text-transform:lowercase;letter-spacing:.01em;will-change:transform,opacity;
+    text-shadow:0 0 24px currentColor;animation:fall-frag 2.4s cubic-bezier(.3,.1,.4,1) forwards}
+  @keyframes fall-frag{0%{opacity:0;transform:translate(-50%,-50%) scale(.15) rotate(var(--r))}
+    18%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(3.1) rotate(var(--r))}}
+  #arrival{opacity:0;pointer-events:none;visibility:hidden}
+  #arrival.show{opacity:1;pointer-events:auto;visibility:visible}
+  #arrival h2{font-family:var(--font-display);font-weight:800;font-size:clamp(2rem,7vw,4rem);margin:6px 0 12px;
+    background:var(--grad-hyper);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 200%;animation:hue 8s linear infinite}
+  .cta-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:26px}
+  .cta-row .btn{cursor:pointer}
+  .exit{position:fixed;top:18px;right:22px;z-index:6;color:var(--bone);opacity:.55;font-size:1.5rem;text-decoration:none;
+    font-family:var(--font-mono);transition:opacity .2s,transform .2s}
+  .exit:hover{opacity:1;transform:rotate(90deg)}
+  .mute{position:fixed;bottom:18px;right:22px;z-index:6;background:none;border:1px solid rgba(255,255,255,.25);color:var(--bone);
+    width:42px;height:42px;border-radius:50%;cursor:pointer;opacity:.55;font-size:1rem;transition:opacity .2s}
+  .mute:hover{opacity:1}
+  .elf-stage{width:240px;height:240px;margin:0 auto 6px}
+  @media(prefers-reduced-motion:reduce){.enter-portal,.hint,#intro h1,#arrival h2{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="void"></canvas>
+<a class="exit" href="index.html" aria-label="Leave the portal">&#10005;</a>
+<button class="mute" id="mute" aria-label="Toggle sound">&#9834;</button>
+
+<div id="frags"></div>
+
+<div class="stage" id="intro">
+  <p class="eyebrow">The Secret Dwells Within</p>
+  <h1>Down the<br>Rabbit Hole</h1>
+  <p class="sub">A portal opens in the floor of the world. The white rabbit already left. How deep does it go?</p>
+  <button class="enter-portal" id="enter">Fall &#8615;</button>
+  <p class="hint">tap anywhere to descend</p>
+</div>
+
+<div class="stage" id="arrival">
+  <div class="elf-stage elf-stage--lg" data-elf></div>
+  <p class="eyebrow">You reached the other side</p>
+  <h2>Curiouser and curiouser.</h2>
+  <p class="sub">You fell through the void and landed exactly where you belong. One big cosmic joke — and you're in on it now.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="shop.html">Enter the Shop &#10142;</a>
+    <a class="btn btn-ghost" href="index.html">Resurface</a>
+    <button class="btn btn-ghost" id="again">Fall Again</button>
+  </div>
+</div>
+
+<script src="js/elf.js"></script>
+<script>
+(function(){
+  "use strict";
+  var reduce = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var m=document.getElementById('void'), mc=m.getContext('2d');
+  var o=document.createElement('canvas'), oc=o.getContext('2d');
+  var W,H,cx,cy,stars,N,speed=0.6,spin=0,hue=200,state='idle',t0=0;
+  function resize(){W=m.width=o.width=innerWidth;H=m.height=o.height=innerHeight;cx=W/2;cy=H/2;init();}
+  function init(){N=Math.min(reduce?260:760,Math.floor(W*H/2200));stars=[];for(var i=0;i<N;i++)stars.push(mk(true));}
+  function mk(){return{x:(Math.random()-.5)*W,y:(Math.random()-.5)*H,z:Math.random()*W};}
+  addEventListener('resize',resize);resize();
+
+  function frame(){
+    var dt = state==='falling' ? (performance.now()-t0)/1000 : 0;
+    var target = state==='falling' ? (0.8 + Math.min(reduce?4:15, dt*(reduce?.6:1.7))) : (state==='arrived'?1.1:0.7);
+    speed += (target-speed)*0.045;
+    spin  += 0.0016 + speed*0.0009;
+    hue = (hue + (state==='falling'?1.6:0.35)) % 360;
+
+    // ---- offscreen warp ----
+    oc.fillStyle='rgba(5,1,13,0.16)'; oc.fillRect(0,0,W,H);
+    oc.save(); oc.translate(cx,cy); oc.rotate(spin); oc.translate(-cx,-cy);
+    for(var i=0;i<N;i++){
+      var s=stars[i], pz=s.z; s.z-=speed*6;
+      if(s.z<1){s.x=(Math.random()-.5)*W;s.y=(Math.random()-.5)*H;s.z=W;pz=W;}
+      var k=160/s.z, x=cx+s.x*k, y=cy+s.y*k, k2=160/pz, px=cx+s.x*k2, py=cy+s.y*k2;
+      var h=(hue + (1-s.z/W)*120)%360, t=1-s.z/W;
+      oc.strokeStyle='hsl('+h+',100%,'+(52+t*30)+'%)';
+      oc.globalAlpha=Math.min(1,t*1.25); oc.lineWidth=t*2.8+0.3;
+      oc.beginPath();oc.moveTo(px,py);oc.lineTo(x,y);oc.stroke();
+    }
+    oc.restore(); oc.globalAlpha=1;
+    // central event-horizon glow
+    var g=oc.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.16);
+    g.addColorStop(0,'hsla('+((hue+180)%360)+',100%,75%,0.5)');
+    g.addColorStop(1,'rgba(5,1,13,0)');
+    oc.fillStyle=g; oc.beginPath(); oc.arc(cx,cy,Math.min(W,H)*0.16,0,7); oc.fill();
+
+    // ---- kaleidoscope composite to main ----
+    mc.globalCompositeOperation='source-over'; mc.fillStyle='#05010D'; mc.fillRect(0,0,W,H);
+    mc.globalCompositeOperation='lighter';
+    var seg=reduce?2:6;
+    for(var sgi=0;sgi<seg;sgi++){
+      mc.save(); mc.translate(cx,cy); mc.rotate(sgi*Math.PI*2/seg + spin*0.4);
+      if(sgi%2) mc.scale(1,-1);
+      mc.translate(-cx,-cy); mc.globalAlpha=0.55; mc.drawImage(o,0,0); mc.restore();
+    }
+    mc.globalAlpha=1; mc.globalCompositeOperation='source-over';
+
+    if(state==='falling' && dt>(reduce?6:14)) arrive();
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  // ---- text fragments ----
+  var phrases=['down the rabbit hole','curiouser and curiouser',"we're all mad here",'eat me','drink me',
+    "i'm late, i'm late",'which way?','off with the autopilot','still falling…','mind the gap in reality',
+    'the secret dwells within','you are all divine beings','one big cosmic joke','wake up, alice','how deep does it go?'];
+  var pi=0, fragTimer=null;
+  var COL=['#FF2BAE','#18E0FF','#00FFA3','#FFD447','#B026FF'];
+  function spawnFrag(){
+    var el=document.createElement('div'); el.className='frag';
+    el.textContent=phrases[pi % phrases.length]; pi++;
+    var c=COL[(Math.random()*COL.length)|0];
+    el.style.color=c;
+    el.style.left=(35+Math.random()*30)+'%'; el.style.top=(32+Math.random()*36)+'%';
+    el.style.fontSize=(1.2+Math.random()*2.4)+'rem';
+    el.style.setProperty('--r',((Math.random()-.5)*30)+'deg');
+    document.getElementById('frags').appendChild(el);
+    setTimeout(function(){el.remove();},2500);
+  }
+
+  // ---- audio (whoosh + drone) ----
+  var AC=null,master=null,muted=false,nodes=[];
+  function startAudio(){
+    if(muted) return;
+    try{
+      AC=new (window.AudioContext||window.webkitAudioContext)();
+      master=AC.createGain(); master.gain.value=0; master.connect(AC.destination);
+      master.gain.linearRampToValueAtTime(0.16, AC.currentTime+3);
+      [55,82.5,110].forEach(function(f,idx){
+        var osc=AC.createOscillator(); osc.type=idx===2?'sawtooth':'sine'; osc.frequency.value=f;
+        var g=AC.createGain(); g.gain.value=idx===2?0.04:0.10; osc.connect(g); g.connect(master); osc.start(); nodes.push(osc);
+      });
+      // rising filtered noise = the fall
+      var buf=AC.createBuffer(1,AC.sampleRate*2,AC.sampleRate); var d=buf.getChannelData(0);
+      for(var i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+      var noise=AC.createBufferSource(); noise.buffer=buf; noise.loop=true;
+      var bp=AC.createBiquadFilter(); bp.type='bandpass'; bp.frequency.value=200; bp.Q.value=0.8;
+      bp.frequency.exponentialRampToValueAtTime(2200, AC.currentTime+12);
+      var ng=AC.createGain(); ng.gain.value=0.5; noise.connect(bp); bp.connect(ng); ng.connect(master); noise.start(); nodes.push(noise);
+    }catch(e){}
+  }
+  function stopAudio(){ if(master){try{master.gain.linearRampToValueAtTime(0,AC.currentTime+1.2);}catch(e){}} setTimeout(function(){try{AC&&AC.close();}catch(e){} AC=null;nodes=[];},1400); }
+  document.getElementById('mute').addEventListener('click',function(e){
+    e.stopPropagation(); muted=!muted; this.innerHTML=muted?'&#128263;':'&#9834;';
+    if(master){ master.gain.value = muted?0:0.16; }
+  });
+
+  // ---- state transitions ----
+  function startFall(){
+    if(state!=='idle') return; state='falling'; t0=performance.now();
+    var intro=document.getElementById('intro'); intro.style.opacity='0'; setTimeout(function(){intro.style.display='none';},800);
+    startAudio();
+    spawnFrag(); fragTimer=setInterval(spawnFrag, reduce?1400:820);
+  }
+  function arrive(){
+    state='arrived'; clearInterval(fragTimer);
+    document.getElementById('arrival').classList.add('show');
+    if(window.DMTElf) window.DMTElf.render();
+    if(master){try{master.gain.linearRampToValueAtTime(0.06,AC.currentTime+2);}catch(e){}}
+  }
+  function again(){
+    document.getElementById('arrival').classList.remove('show');
+    pi=0; state='falling'; t0=performance.now();
+    spawnFrag(); fragTimer=setInterval(spawnFrag, reduce?1400:820);
+    if(!AC) startAudio(); else if(master&&!muted){try{master.gain.linearRampToValueAtTime(0.16,AC.currentTime+2);}catch(e){}}
+  }
+
+  document.getElementById('enter').addEventListener('click',function(e){e.stopPropagation();startFall();});
+  document.getElementById('again').addEventListener('click',function(e){e.stopPropagation();again();});
+  document.addEventListener('click',function(e){
+    if(e.target.closest('a,button')) return;
+    if(state==='idle') startFall();
+  });
+  addEventListener('beforeunload',stopAudio);
+})();
+</script>
+</body>
+</html>
