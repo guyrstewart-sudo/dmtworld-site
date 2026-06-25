@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — DMT World</title>
+<meta name="description" content="Shop all 33 DMT World psychedelic art tees. Machine Elves, Plant Medicine, Cosmic Comedy & Activist collections. All $23. Stripe & Etsy checkout.">
+<link rel="icon" href="assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<canvas id="hyperspace"></canvas><div class="bg-aura"></div><div class="grain"></div>
+
+<nav class="nav"><div class="nav-inner">
+  <a class="brandmark" href="index.html"><img class="dot" src="assets/logo.svg" alt=""> DMT&nbsp;WORLD</a>
+  <button class="nav-toggle" aria-label="menu">&#9776;</button>
+  <div class="nav-links">
+    <a data-page="index.html" href="index.html">Home</a>
+    <a data-page="shop.html" href="shop.html">Shop</a>
+    <a data-page="live.html" href="live.html">Live</a>
+    <a data-page="about.html" href="about.html">About</a>
+    <a data-page="brandbook.html" href="brandbook.html">Brand&nbsp;Book</a>
+    <a class="nav-cta" href="shop.html">Shop Tees</a>
+  </div>
+</div></nav>
+
+<section style="padding-top:60px">
+  <div class="wrap">
+    <div class="shead">
+      <span class="eyebrow">All $23 · Worldwide Shipping</span>
+      <h1 class="grad-text" style="font-size:clamp(2.4rem,6vw,4rem)">Wear the Other Side</h1>
+      <p>Every shirt is a transmission and a conversation starter. 33 living designs across four frequencies — pick the one that's already winking at you.</p>
+    </div>
+
+    <div class="filters">
+      <button class="chip active" data-filter="all">All</button>
+      <button class="chip" data-filter="Machine Elves">Machine Elves</button>
+      <button class="chip" data-filter="Plant Medicine">Plant Medicine</button>
+      <button class="chip" data-filter="Cosmic Comedy">Cosmic Comedy</button>
+      <button class="chip" data-filter="Activist">Activist</button>
+    </div>
+
+    <div class="grid" id="shop-grid"></div>
+
+    <div class="stats reveal" style="margin-top:60px">
+      <div class="stat"><b>4.8&#9733;</b><span>1,096 Reviews</span></div>
+      <div class="stat"><b>10,547</b><span>Orders Shipped</span></div>
+      <div class="stat"><b>Worldwide</b><span>Tracked Delivery</span></div>
+      <div class="stat"><b>Secure</b><span>Stripe / Etsy Checkout</span></div>
+    </div>
+    <p class="note center" style="margin-top:18px;max-width:680px;margin-left:auto;margin-right:auto">
+      Checkout runs through our verified Etsy store today (10k+ orders · 4.8★). One-click Stripe checkout switches on automatically the moment payment keys are added in <b>config.js</b> — no code changes needed.
+    </p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brandmark" style="margin-bottom:12px"><img class="dot" src="assets/logo.svg" alt=""> DMT&nbsp;WORLD</div>
+      <p style="color:var(--muted);max-width:320px">The Secret Dwells Within. Expressive psychedelic art apparel, hand-dreamt in Asheville, NC since 2014.</p>
+      <div style="display:flex;gap:16px;margin-top:16px">
+        <a data-link="instagram" href="#" target="_blank" rel="noopener">Instagram</a>
+        <a data-link="facebook" href="#" target="_blank" rel="noopener">Facebook</a>
+        <a data-link="etsy" href="#" target="_blank" rel="noopener">Etsy</a>
+      </div>
+    </div>
+    <div><h4>Explore</h4>
+      <a href="shop.html">Shop All</a><a href="live.html">Live Drops</a><a href="about.html">Our Story</a><a href="brandbook.html">Brand Book</a>
+    </div>
+    <div><h4>Collections</h4>
+      <a href="shop.html?c=Machine%20Elves">Machine Elves</a><a href="shop.html?c=Plant%20Medicine">Plant Medicine</a>
+      <a href="shop.html?c=Cosmic%20Comedy">Cosmic Comedy</a><a href="shop.html?c=Activist">Activist</a>
+    </div>
+  </div>
+  <div class="wrap"><div class="disclaimer">
+    DMT World designs and sells <strong>expressive art apparel</strong> — graphic clothing celebrating psychedelic art, culture, humor, and consciousness. We do not sell, supply, or provide instructions for any controlled substance. Designs are creative expression and cultural commentary. © 2026 DMT World. All cosmic jokes reserved.
+  </div></div>
+</footer>
+
+<div class="modal" id="modal"><div class="modal-box"></div></div>
+
+<script async src="https://js.stripe.com/v3/buy-button.js"></script>
+<script src="config.js"></script>
+<script src="js/products.js"></script>
+<script src="js/site.js"></script>
+</body>
+</html>
