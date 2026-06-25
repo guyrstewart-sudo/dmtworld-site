@@ -122,8 +122,6 @@
         '<circle cx="120" cy="122" r="47" fill="url(#ocean'+uid+')" stroke="url(#iri'+uid+')" stroke-width="2.5"/>'+
         '<g clip-path="url(#clip'+uid+')">'+
           '<g class="globe-spin">'+continents(0)+continents(92)+'</g>'+
-          '<path d="M74 88 Q120 78 166 88 Q120 99 74 88 Z" fill="#EAF4FB" opacity="0.85"/>'+
-          '<path d="M74 156 Q120 170 166 156 Q120 149 74 156 Z" fill="#EAF4FB" opacity="0.9"/>'+
           '<circle cx="120" cy="122" r="46" fill="url(#term'+uid+')"/>'+
           '<ellipse cx="104" cy="106" rx="13" ry="8" fill="#fff" opacity="0.12"/>'+
           '<rect class="shimmer" x="58" y="74" width="24" height="96" fill="url(#shine'+uid+')"/>'+
