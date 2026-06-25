@@ -15,7 +15,6 @@
   };
   function teeArt(p){
     var c = THEMES[p.collection] || ["#FF2BAE","#B026FF","#18E0FF"];
-    // procedural psychedelic background; real photo (assets/products/<id>.jpg) overrides if present
     return "background:" +
       "radial-gradient(circle at 30% 25%, "+c[0]+"55, transparent 45%)," +
       "radial-gradient(circle at 75% 70%, "+c[1]+"55, transparent 45%)," +
@@ -74,25 +73,12 @@
       ctx.globalAlpha=1; requestAnimationFrame(frame);
     }
     addEventListener('resize',resize); resize();
-    if(reduce){ // static field
+    if(reduce){
       ctx.fillStyle='#05010D';ctx.fillRect(0,0,w,h);
       stars.forEach(function(s){var k=128/s.z;ctx.fillStyle=s.c;ctx.globalAlpha=.6;ctx.fillRect(cx+s.x*k,cy+s.y*k,1.6,1.6);});
       ctx.globalAlpha=1; return;
     }
     frame();
-  }
-
-  /* ---------- WINKING ELVES (random blink) ---------- */
-  function initElves(){
-    document.querySelectorAll('[data-elf-wink]').forEach(function(svg){
-      function wink(){
-        var lid=svg.querySelector('.wink-lid'); if(!lid) return;
-        lid.style.transform='scaleY(1)';
-        setTimeout(function(){lid.style.transform='scaleY(0)';},190);
-        setTimeout(wink, 2200+Math.random()*3200);
-      }
-      setTimeout(wink, 800+Math.random()*1500);
-    });
   }
 
   /* ---------- SHOP RENDER ---------- */
@@ -105,7 +91,6 @@
   }
   function cardHTML(p){
     var imgSrc=p.image||('assets/products/'+p.id+'.jpg');
-    var hasImg=!!(p.image)||true; // attempt image; reveal name only if it fails
     return '<article class="card reveal" data-collection="'+p.collection+'">'+
       '<div class="art" style="'+teeArt(p)+'">'+stockBadge(p)+
         '<img src="'+imgSrc+'" alt="'+p.name+'" loading="lazy" onerror="this.remove();var n=this.parentNode.querySelector(\'.tee-name\');if(n)n.style.display=\'flex\'">'+
@@ -125,7 +110,6 @@
     var P=window.DMT_PRODUCTS;
     grid.innerHTML=P.map(cardHTML).join('');
     initReveal();
-    // filters
     document.querySelectorAll('.chip').forEach(function(chip){
       chip.addEventListener('click',function(){
         document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('active');});
@@ -136,12 +120,10 @@
         });
       });
     });
-    // buy clicks
     grid.addEventListener('click',function(e){
       var b=e.target.closest('.buy'); if(!b) return;
       openModal(b.getAttribute('data-id'));
     });
-    // preselect from ?c= collection
     var c=new URLSearchParams(location.search).get('c');
     if(c){var chip=document.querySelector('.chip[data-filter="'+c+'"]'); if(chip) chip.click();}
   }
@@ -151,13 +133,17 @@
     var p=(window.DMT_PRODUCTS||[]).find(function(x){return x.id===id;}); if(!p) return;
     var m=document.getElementById('modal'); if(!m) return;
     var checkout;
-    if(CFG.stripeEnabled && CFG.stripePublishableKey && p.stripeBuyButtonId){
+    if(p.stripeLink){
+      checkout='<a class="btn btn-primary buy" style="width:100%;justify-content:center" href="'+p.stripeLink+
+        '" target="_blank" rel="noopener">Buy Now — $'+p.price.toFixed(2)+'</a>'+
+        '<p class="note">Secure checkout by Stripe · tracked worldwide shipping.</p>';
+    } else if(CFG.stripeEnabled && CFG.stripePublishableKey && p.stripeBuyButtonId){
       checkout='<div class="stripe-slot"><stripe-buy-button buy-button-id="'+p.stripeBuyButtonId+
         '" publishable-key="'+CFG.stripePublishableKey+'"></stripe-buy-button></div>';
     } else {
       checkout='<a class="btn btn-primary buy" style="width:100%;justify-content:center" href="'+p.etsyUrl+
         '" target="_blank" rel="noopener">Buy on Etsy — $'+p.price.toFixed(2)+'</a>'+
-        '<p class="note">Secure checkout via our Etsy store (10k+ orders · 4.8★). Stripe one-click checkout activates here once keys are added in config.js.</p>';
+        '<p class="note">Secure checkout via our Etsy store (10k+ orders · 4.8★). One-click Stripe checkout activates here once payment links are added.</p>';
     }
     m.querySelector('.modal-box').innerHTML=
       '<div class="modal-art" style="'+teeArt(p)+'">'+
@@ -198,13 +184,11 @@
     var name = lv.platform==='tiktok' ? 'TikTok LIVE' : 'Whatnot';
     document.querySelectorAll('[data-live-cta]').forEach(function(a){a.href=url||'#';
       a.textContent = (lv.isLiveNow?'Join the Live Drop on ':'Get Notified on ')+name;});
-    // badge
     var badge=document.getElementById('live-badge');
     if(badge){
       if(lv.isLiveNow){badge.classList.remove('off');badge.querySelector('.txt').textContent='Live now — '+name;}
       else{badge.classList.add('off');badge.querySelector('.txt').textContent='Offline — next drop below';}
     }
-    // countdown
     var cd=document.getElementById('countdown');
     if(cd && lv.nextShowISO){
       var target=new Date(lv.nextShowISO).getTime();

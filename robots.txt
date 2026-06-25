@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://guyrstewart-sudo.github.io/dmtworld-site/sitemap.xml
