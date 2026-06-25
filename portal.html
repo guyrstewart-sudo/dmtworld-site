@@ -52,12 +52,15 @@
     width:42px;height:42px;border-radius:50%;cursor:pointer;opacity:.55;font-size:1rem;transition:opacity .2s}
   .mute:hover{opacity:1}
   .elf-stage{width:240px;height:240px;margin:0 auto 6px}
+  .skip{position:fixed;top:20px;left:24px;z-index:6;font-family:var(--font-mono);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);opacity:.7;transition:opacity .2s}
+  .skip:hover{opacity:1;color:var(--bone)}
   @media(prefers-reduced-motion:reduce){.enter-portal,.hint,#intro h1,#arrival h2{animation:none}}
 </style>
 </head>
 <body>
 <canvas id="void"></canvas>
-<a class="exit" href="index.html" aria-label="Leave the portal">&#10005;</a>
+<a class="exit" href="index.html?nosplash=1" aria-label="Leave the portal">&#10005;</a>
+<a class="skip" id="skip" href="index.html?nosplash=1">skip intro &#8594;</a>
 <button class="mute" id="mute" aria-label="Toggle sound">&#9834;</button>
 
 <div id="frags"></div>
@@ -77,7 +80,7 @@
   <p class="sub">You fell through the void and landed exactly where you belong. One big cosmic joke — and you're in on it now.</p>
   <div class="cta-row">
     <a class="btn btn-primary" href="shop.html">Enter the Shop &#10142;</a>
-    <a class="btn btn-ghost" href="index.html">Resurface</a>
+    <a class="btn btn-ghost" id="resurface" href="index.html?nosplash=1">Resurface</a>
     <button class="btn btn-ghost" id="again">Fall Again</button>
   </div>
 </div>
@@ -87,6 +90,8 @@
 (function(){
   "use strict";
   var reduce = matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var SPLASH = new URLSearchParams(location.search).has('splash');
+  if(SPLASH){ try{localStorage.setItem('dmt_seen','1');}catch(e){} var _r=document.getElementById('resurface'); if(_r)_r.innerHTML='Enter DMT World &#10142;'; }
   var m=document.getElementById('void'), mc=m.getContext('2d');
   var o=document.createElement('canvas'), oc=o.getContext('2d');
   var W,H,cx,cy,stars,N,speed=0.6,spin=0,hue=200,state='idle',t0=0;
